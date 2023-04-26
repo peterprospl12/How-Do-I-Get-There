@@ -6,6 +6,9 @@
 #include "Node.cpp"
 #include "City.h"
 #include "Queue.h"
+
+#include <queue>
+#include <vector>
 using namespace std;
 
 
@@ -17,6 +20,7 @@ void djikstra_algorithm(Hashmap world, BasicString start, BasicString end) {
 	int size = world.getCurrSize();
 	bool* visited = new bool[size];
 	int* distance = new int[size];
+	std::priority_queue<std::pair<int, City*>, std::vector<std::pair<int, City*>>, std::greater<std::pair<int, City*>>> pq;
 
 	for (int i = 0; i < size; i++) {
 		visited[i] = false;
@@ -24,31 +28,27 @@ void djikstra_algorithm(Hashmap world, BasicString start, BasicString end) {
 	}
 
 	distance[from->getId()] = 0;
+	pq.push(std::make_pair(0, from));
 
-	for (int i = 0; i < size - 1; i++) {
-		int min_dist = INT_MAX;
-		City* current = nullptr;
+	while (!pq.empty()) {
+		City* current = pq.top().second;
+		pq.pop();
 
-		// ZnajdŸ najbli¿sze miasto, które nie zosta³o jeszcze odwiedzone
-		for (Node<City>* neighborNode = from->getNeighboursList().getHead(); neighborNode != nullptr; neighborNode = neighborNode->GetNext()) {
-			int neighborId = neighborNode->GetValue()->getId();
-			if (!visited[neighborId] && distance[from->getId()] + neighborNode->getDistance() < distance[neighborId]) {
-				distance[neighborId] = distance[from->getId()] + neighborNode->getDistance();
-			}
-
-			if (!visited[neighborId] && distance[neighborId] < min_dist) {
-				min_dist = distance[neighborId];
-				current = neighborNode->GetValue();
-			}
-		}
-
-		// Jeœli nie uda³o siê znaleŸæ kolejnego miasta, koñczymy przetwarzanie
-		if (current == nullptr) {
-			break;
+		if (visited[current->getId()]) {
+			continue;
 		}
 
 		visited[current->getId()] = true;
-		from = world.find(current->getName().str);
+
+		for (Node<City>* neighborNode = current->getNeighboursList().getHead(); neighborNode != nullptr; neighborNode = neighborNode->GetNext()) {
+			City* neighbor = neighborNode->GetValue();
+			int newDist = distance[current->getId()] + neighborNode->getDistance();
+
+			if (newDist < distance[neighbor->getId()]) {
+				distance[neighbor->getId()] = newDist;
+				pq.push(std::make_pair(newDist, neighbor));
+			}
+		}
 	}
 
 	std::cout << "Najkrotsza droga z " << start << " do " << end << " wynosi: " << distance[to->getId()] << endl;
