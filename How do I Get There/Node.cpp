@@ -1,13 +1,22 @@
 #include <iostream>
 #include "Node.h"
 #include "BasicString.h"
+
 template <typename Type>
 Node<Type>::Node() {
     this->prev = nullptr;
     this->next = nullptr;
     this->value = nullptr;
     this->distance = 0;
-    this->neighbours = nullptr;
+}
+
+template <typename Type>
+
+Node<Type>::Node(Type* value) {
+	this->prev = nullptr;
+	this->next = nullptr;
+	this->value = value;
+	this->distance = 0;
 }
 
 template <typename Type>
@@ -43,15 +52,27 @@ void Node<Type>::setDistance(int distance) {
 
 
 template <typename Type>
-Node<Type>* Node<Type>::GetPrev() const {
+Node<Type>* Node<Type>::GetPrev() {
 	return this->prev;
 }
 
-
 template <typename Type>
-Node<Type>* Node<Type>::GetNext() const {
+Node<Type>* Node<Type>::GetNext() {
 	return this->next;
 }
+
+template <typename Type>
+void Node<Type>::SetPrev(Node<Type>* prev) {
+	this->prev = prev;
+}
+
+template <typename Type>
+void Node<Type>::SetNext(Node<Type>* next) {
+	this->next = next;
+}
+
+
+
 
 template <typename Type>
 std::ostream& operator<<(std::ostream& os, const Node<Type>& node) {

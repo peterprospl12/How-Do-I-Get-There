@@ -12,16 +12,18 @@ private:
     int size;
 public:
     List();
-    void insert(Type data);
+    void insert(Type* data, int distance);
     
     int getSize();
     
     Node<Type>* getHead() const;
     Node<Type>* getTail();
     
+    void drawList();
     
     void setHead(Node<Type>* newHead);
     void setTail(Node<Type>* newTail);
+
 
     ~List();
 

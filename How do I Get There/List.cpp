@@ -1,6 +1,7 @@
-#include "Node.h"
 #include "List.h"
 #include "BasicString.h"
+#include "City.h"
+#include "Node.h"
 #include <iostream>
 template <typename Type>
 
@@ -11,15 +12,33 @@ List<Type>::List() {
 }
 
 template <typename Type>
-void List<Type>::insert(Type data) {
-    Node<Type>* section = new Node<Type>(data);
+void List<Type>::insert(Type* data, int distance) {
+    Node<Type>* tempNode = this->head;
+    for (int i = 0; i < this->size; i++) {
+        if (tempNode->GetValue()->getName() == data->getName()) {
+            if (tempNode->getDistance() > distance) {
+				tempNode->setDistance(distance);
+				return;
+			}
+            else {
+				return;
+			}
+		}
+
+        tempNode = tempNode->GetNext();
+    }
+
+    
+    
+    
+    Node<Type>* section = new Node<Type>(data, distance);
     if (this->head == nullptr) {
         this->head = section;
         this->tail = section;
     }
     else {
-        this->tail->next = section;
-        section->prev = this->tail;
+        this->tail->SetNext(section);
+        section->SetPrev(this->tail);
         this->tail = section;
     }
     this->size++;
@@ -44,15 +63,15 @@ Node<Type>* List<Type>::getTail() {
 }
 
 
+
 template <typename Type>
-std::ostream& operator<<(std::ostream& os, const List<Type>& list) {
-    Node<Type>* current = list.getHead();
+
+void List<Type>::drawList() {
+	Node<Type>* current = this->head;
     while (current != nullptr) {
-        os << current->value;
-        current = current->next;
-        os << std::endl;
-    }
-    return os;
+		std::cout << current->GetValue()->getName() << ", dist: " << current->getDistance() << std::endl;
+		current = current->GetNext();
+	}
 }
 
 

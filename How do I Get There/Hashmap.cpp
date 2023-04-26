@@ -1,10 +1,16 @@
 #include "Hashmap.h"
-#include "City.h"
+#include <iostream>
+
 
 const int hash_number = 31;
 
+Hashmap::Hashmap() {
+	this->cities = nullptr;
+	this->size = 0;
+}
+
 Hashmap::Hashmap(int x, int y) {
-	this->cities = new City[x * y + hash_number]();
+	this->cities = new City*[x * y + hash_number]();
 	this->size = x * y + hash_number;
 }	
 
@@ -24,19 +30,20 @@ unsigned int Hashmap::hash(const char* key) {
 
 
 void Hashmap::insert(City* newCity) {
-	int index = hash(newCity->name.str);
-	if (&cities[index] == nullptr) {
-		cities[index] = *newCity;
+	int index = hash(newCity->getName().str);
+	if (cities[index] == nullptr) {
+		cities[index] = newCity;
 	}
+	this->curr_size++;
 } 
 
 City* Hashmap::find(const char* key) {
 	int index = hash(key);
-	if (&cities[index] == nullptr) {
+	if (cities[index] == nullptr) {
 		return nullptr;
 	}
 	else {
-		return &cities[index];
+		return cities[index];
 	}
 }
 
