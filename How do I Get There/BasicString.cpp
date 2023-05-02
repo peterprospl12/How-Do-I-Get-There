@@ -16,7 +16,7 @@ BasicString::BasicString(char* orig) {
     str[strlen(orig)] = '\0';
 }
 
-BasicString::BasicString(const char* orig) {
+BasicString::BasicString(const char* orig) {    
     str = new char[strlen(orig) + 1];
     strcpy(str, orig);
     str[strlen(orig)] = '\0';
@@ -34,13 +34,16 @@ BasicString::BasicString(BasicString&& cpy)
 }
 
 BasicString& BasicString::operator=(const BasicString& right) {
-
+    if (this == &right) {
+        return *this;
+    }
     delete[] str;
     str = new char[strlen(right.str) + 1];
     strcpy(str, right.str);
     str[strlen(right.str)] = '\0';
     return *this;
 }
+
 
 BasicString& BasicString::operator=(const char* right) {
 
@@ -53,7 +56,7 @@ BasicString& BasicString::operator=(const char* right) {
 
 
 
-BasicString& BasicString::operator=(BasicString&& right)
+BasicString& BasicString::operator=(BasicString&& right) noexcept
 {
     delete[] str;
     str = right.str;
@@ -110,84 +113,6 @@ BasicString& BasicString::operator+=(const BasicString& orig) {
     delete[] newStr;
     *this = result;
     return *this;
-}
-
-void BasicString::replaceChar(const char* oldChar, const char* newChar) {
-    if (newChar == " ") {
-        int counter = 0;
-        for (int i = 0; i < strlen(this->str); i++) {
-            if (this->str[i] == *oldChar) {
-                counter++;
-                break;
-            }
-        }
-
-        if (counter == 0) {
-            return;
-        }
-
-        char* newStr = new char[strlen(this->str) - counter + 1];
-        int j = 0;
-        for (int i = 0; i < strlen(this->str); i++) {
-            if (this->str[i] != *oldChar) {
-                newStr[j++] = this->str[i];
-            }
-        }
-        newStr[j] = '\0';
-
-        delete[] this->str;
-        this->str = newStr;
-    }
-
-    else {
-        for (int i = 0; i < strlen(this->str); i++) {
-            if (this->str[i] == *oldChar) {
-                this->str[i] = *newChar;
-            }
-        }
-    }
-}
-
-bool BasicString::checkForChar(const char* checkChar) {
-    for (int i = 0; i < strlen(this->str); i++) {
-        if (this->str[i] == *checkChar) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void BasicString::addSpace(const char* oldChar) {
-    char* newStr = new char[strlen(this->str) + 1];
-    bool addSpace = true;
-    for (int i = 0; i < strlen(this->str); i++) {
-        if (this->str[i] == *oldChar && addSpace) {
-            newStr[i] = ' ';
-        }
-        else {
-            newStr[i] = this->str[i];
-        }
-    }
-    newStr[strlen(this->str)] = '\0';
-    delete[] this->str;
-    this->str = newStr;
-}
-
-
-
-int BasicString::countChars(const char* countChar) {
-    if (this == nullptr || this->str == "") {
-        return 0;
-    }
-    int length = strlen(this->str);
-    int counter = 0;
-    for (int i = 0; i < length; i++) {
-        if (this->str[i] == *countChar) {
-            counter++;
-        }
-    }
-    return counter;
-
 }
 
 

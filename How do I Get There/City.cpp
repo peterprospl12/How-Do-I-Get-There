@@ -1,58 +1,45 @@
 
 #include "City.h"
 #include "List.cpp"
-
-City::City() {
-	this->name = BasicString();
-	this->posX = -15;
-	this->posY = -15;
+#include "Hashmap.h"
+City::City() 
+	: name(""), posX(-1), posY(-1), id(-1)
+{
 	this->neighbours = List<City>();
-	this->id = -15;
 }
 
-City::City(BasicString name, int posX, int posY, int id) {
-	this->name = name;
-	this->posX = posX;
-	this->posY = posY;
+City::City(BasicString name, int posX, int posY, int id)
+	: name(name), posX(posX), posY(posY), id(id) 
+{
 	this->neighbours = List<City>();
-	this->id = id;
 }
 
-int City::getPosX() {
+
+int City::getPosX() const {
 	return this->posX;
 }
 
-int City::getPosY() {
+int City::getPosY() const {
 	return this->posY;
 }
 
-BasicString City::getName() {
+BasicString City::getName() const {
 	return this->name;
 }
 
-int City::getId() {
+int City::getId() const {
 	return this->id;
 }
 
-Node<City>* City::getNeighbours() {
-	return this->neighbours.getHead();
-}
-
-void City::setPosX(int posX) {
-	this->posX = posX;
-}
-
-void City::setPosY(int posY) {
-	this->posY = posY;
-}
-
-void City::setName(BasicString name) {
-	this->name = name;
-}
 
 List<City>& City::getNeighboursList() {
 	return this->neighbours;
 }
+
+void City::addFlight(Hashmap& world, const BasicString& to, int time) {
+	neighbours.insert(world.find(to.str), time);
+}
+
 
 std::ostream& operator<<(std::ostream& os, const City& city) {
 	os << city.name << " (" << city.posX << ", " << city.posY << ")";
@@ -61,6 +48,5 @@ std::ostream& operator<<(std::ostream& os, const City& city) {
 
 
 City::~City() {
-	
 
 }

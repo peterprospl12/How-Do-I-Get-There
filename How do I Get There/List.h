@@ -14,10 +14,10 @@ public:
     List();
     void insert(Type* data, int distance);
     
-    int getSize();
+    int getSize() const;
     
     Node<Type>* getHead() const;
-    Node<Type>* getTail();
+    Node<Type>* getTail() const;
     
     void drawList();
     

@@ -1,6 +1,6 @@
 #include "Hashmap.h"
 #include <iostream>
-
+#include "City.h"
 
 const int hash_number = 31;
 
@@ -10,20 +10,20 @@ Hashmap::Hashmap() {
 }
 
 Hashmap::Hashmap(int x, int y) {
-	this->cities = new City*[x * y + hash_number]();
+	this->cities = new Queue<qCity>[x * y + hash_number]();
 	this->size = x * y + hash_number;
 }	
 
 
-unsigned int Hashmap::hash(const char* key) {
+unsigned int Hashmap::hash(const char* key) const{
 	unsigned long long int hashVal = 0;
-	int tableSize = 400;
+	int tableSize = size;
 
 	for (int i = 0; i < std::strlen(key); ++i) {
 		hashVal = 31 * hashVal + key[i];
 	}
 
-	hashVal %= tableSize;
+	hashVal = hashVal % tableSize;
 
 	return hashVal;
 }
@@ -31,31 +31,38 @@ unsigned int Hashmap::hash(const char* key) {
 
 void Hashmap::insert(City* newCity) {
 	int index = hash(newCity->getName().str);
-	if (cities[index] == nullptr) {
-		cities[index] = newCity;
-	}
+	
+	cities[index].insert(newCity);
 	this->curr_size++;
-} 
+}
 
 City* Hashmap::find(const char* key) {
 	int index = hash(key);
-	if (cities[index] == nullptr) {
-		return nullptr;
-	}
-	else {
-		return cities[index];
-	}
+	
+	
+		qCity* tempNode = cities[index].getHead();
+		while (tempNode->city->getName() != key) {
+			tempNode = tempNode->next;
+		}
+		return tempNode->city;
+	
 }
 
 
-int Hashmap::getSize() {
+int Hashmap::getSize() const{
 	return this->size;
 }
 
-int Hashmap::getCurrSize() {
+int Hashmap::getCurrSize() const{
 	return this->curr_size;
 }
 
-Hashmap::~Hashmap() {
+void Hashmap::delayedDestructor() {
+
 	delete[] cities;
+}
+
+
+Hashmap::~Hashmap() {
+	
 }

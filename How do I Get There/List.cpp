@@ -13,24 +13,7 @@ List<Type>::List() {
 
 template <typename Type>
 void List<Type>::insert(Type* data, int distance) {
-    Node<Type>* tempNode = this->head;
-    for (int i = 0; i < this->size; i++) {
-        if (tempNode->GetValue()->getName() == data->getName()) {
-            if (tempNode->getDistance() > distance) {
-				tempNode->setDistance(distance);
-				return;
-			}
-            else {
-				return;
-			}
-		}
 
-        tempNode = tempNode->GetNext();
-    }
-
-    
-    
-    
     Node<Type>* section = new Node<Type>(data, distance);
     if (this->head == nullptr) {
         this->head = section;
@@ -47,7 +30,7 @@ void List<Type>::insert(Type* data, int distance) {
 
 
 template <typename Type>
-int List<Type>::getSize() {
+int List<Type>::getSize() const {
     return this->size;
 }
 
@@ -58,7 +41,7 @@ Node<Type>* List<Type>::getHead() const {
 }
 
 template <typename Type>
-Node<Type>* List<Type>::getTail() {
+Node<Type>* List<Type>::getTail() const{
     return this->tail;
 }
 
@@ -88,5 +71,5 @@ void List<Type>::setTail(Node<Type>* newTail) {
 
 template <typename Type>
 List<Type>::~List() {
-
+ 
 }

@@ -3,25 +3,31 @@
 template <typename Type>
 class Vector {
 private:
-	Type** data;
+	Type* data;
 	int capacity;
 	int size;
 public:
 	Vector() {
-		this->data = new Type*[1];
+		this->data = new Type[1];
 		this->capacity = 1;
 		this->size = 0;
 	}
-	~Vector() {
-
+	explicit Vector(int capacity) {
+		this->data = new Type[capacity];
+		this->capacity = capacity;
+		this->size = 0;
 	}
-	int getSize() {
+	~Vector() {
+		delete[] this->data;
+	}
+	int getSize() const {
 		return this->size;
 	}
-	bool isEmpty() {
+	
+	bool isEmpty() const {
 		return this->size == 0;
 	}
-	void push_back(Type* element) {
+	void push_back(const Type& element) {
 		if (this->size >= this->capacity) {
 			this->reserve(this->capacity * 2);
 		}
@@ -32,7 +38,7 @@ public:
 	void reserve(int newCapacity) {
 		if (newCapacity > this->capacity) {
 			this->capacity = newCapacity;
-			Type** temp = new Type*[this->capacity];
+			Type* temp = new Type[this->capacity];
 			for (int i = 0; i < this->size; i++) {
 				temp[i] = this->data[i];
 			}
@@ -43,19 +49,34 @@ public:
 
 	void popBack() {
 		if (size > 0) {
-			this->data[size - 1] = nullptr;
+			this->data[size - 1] = Type();
 			this->size--;
 		}
 	}
 
-	Type* operator[](int index) {
+	Type operator[](int index) {
 		if (index >= 0 && index < size) {
 			return data[index];
 		}
-		return nullptr;
+		return Type();
+	}
+
+	void setValue(int index, Type value) {
+		if (index >= 0 && index < size) {
+			data[index] = value;
+		}
 	}
 
 
+	void swap(int first, int second) {
+		if (first >= 0 && second >= 0 && first < size && second < size) {
+			Type temp = data[first];
+			data[first] = data[second];
+			data[second] = temp;
+		}
+	}
+
+	
 
 
 };

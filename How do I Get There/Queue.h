@@ -1,5 +1,7 @@
 #pragma once
-#include "City.h"
+#include "Basicstring.h"
+class City;
+
 struct qNode {
 	int posX;
 	int posY;
@@ -11,6 +13,12 @@ struct qCity {
 	City* city;
 	qCity* next;
 };
+
+struct qString {
+	BasicString name;
+	qString* next;
+};
+
 
 template <typename Type>
 class Queue {
@@ -60,6 +68,22 @@ public:
 		this->size++;
 	}
 
+	void insert(BasicString name) {
+		qString* section = new qString();
+		section->name = name;
+		section->next = nullptr;
+
+		if (this->tail == nullptr) {
+			this->head = section;
+			this->tail = section;
+		}
+		else {
+			this->tail->next = section;
+			this->tail = section;
+		}
+		this->size++;
+	}
+
 
 
 	void pop() {
@@ -75,10 +99,14 @@ public:
 		this->size--;
 	}
 
-	int getSize() {
+
+	int getSize() const{
 		return this->size;
 	}
 
+	bool empty() const {
+		return this->size == 0;
+	}
 
 	Type* getHead() {
 		return this->head;
