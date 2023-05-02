@@ -25,35 +25,7 @@ Implementation notes:
   - Code readability is important, and comments (which are of course allowed) do not necessarily ensure it.
   - Smartpointers from standard library are forbidden, but you can still implement your own smartpointer class.
   - Please remember to free memory when deleting elements of the implemented data structures.
-Przykłady:/Examples:
 
-Tak może być:/This can be:
-*GDANSK....OPOLE....RUMIA
-...*GDYNIA......*....*...
-*SOPOT.............*....*
-...PUCK*.*KRAKOW.REDA.HEL
-Tak nie będzie:/This is incorrect:
-**GDANSK..........OPOLE.
-..........*GDYNIA*......
-*SOPOTHEL...............
-........*..REDA.*PUCK*..
-
-Z A można dotrzeć do B:/It is possible to arrive from point A to B:
-..................
-A*####...#####*B..
-.....#.C.#........
-.....##*##........
-......
-.A**B.
-......
-
-Z A nie można dotrzeć do B:/It is not possible to arrive from point A to B:
-....##*B
-A*##....
-....##*B
-A*#*C...
-....*....
-A*##C##*B
 Wejście:/Input:
 W pierwszej linii wejścia pojawią się wymiary mapy: szerokość w i wysokość h. W następnych h liniach (każda po w znaków) podany będzie opis mapy. Każdy znak opisu to kropka (.) oznaczająca puste pole, krzyżyk (#) reprezentujący drogę, gwiazdka (*) symbolizujący miasto lub litera bądź cyfra, będąca częścią nazwy miasta.
 W kolejnej linii pojawi się jedna liczba k – liczba połączeń lotniczych. Następne k linii to opis połączeń w postaci źródło cel czas, gdzie źródło to nazwa miasta startowego, cel to nazwa miasta docelowego a czas jest czasem przelotu w minutach. W kolejnej linii pojawi się jedna liczba q będąca liczbą zapytań. Każde zapytanie pojawi się w osobnej linii i będzie miało format: źródło cel typ. Jest to zapytanie o najkrótszy czas przejazdu od miasta źródło do miasta cel. Typ równy zero oznacza zapytanie tylko o czas. Gdy zapytanie ma typ równy jeden, należy także podać trasę przejazdu.
@@ -64,8 +36,7 @@ Wyjście:/Output:
 Na wyjściu należy wypisać dla każdego zapytania jedną linię. Na początku linii powinna pojawić się liczba, będąca najkrótszym czasem podróży pomiędzy miastami. Jeżeli zapytanie ma typ równy jeden, należy także wypisać, po spacji, wszystkie miasta pośrednie (bez startowego i końcowego) w kolejności ich odwiedzania.
 ------------------------------------------------------------------------------------------------------------------------
 For each query, output one line. At the beginning of the line should be the number representing the shortest travel time between the cities. If the query has a type of one, all intermediate cities (excluding the starting and ending cities) should also be listed in the order they were visited, separated by spaces.
-Testy:
-Tutaj
+
 Opis testów:
 1 - przykład
 2 - minimalny
@@ -81,8 +52,7 @@ Opis testów:
 12 - spirala, rekurencja implementacja przeszukiwania przepełni stos
 13 - długa ścieżka, implementacja z tablicą raczej nie zmieści się w czasie
 14 - dużo krawędzi
-Tests:
-Here
+
 Opis testów:
 1 - example
 2 - minimum
@@ -98,36 +68,3 @@ Opis testów:
 12 - spiral, recursion implementation of search overflows the stack
 13 - long path, array implementation may not fit in time
 14 - many edges
-Przykład:/Example:
-Wejście:/Input:
-20 20
-.........GDANSK.....
-........*...........
-........#...........
-........#...........
-*##################.
-#SZCZECIN.........#.
-#.................#.
-##................#.
-.############*#####.
-.#...WARSZAWA.......
-.#..................
-.#############......
-.#...........#......
-.#..WROCLAW.##......
-.#..*.......*.......
-.####.......#KIELCE.
-......*##.#########.
-.OPOLE..#.*.......#.
-........#.KRAKOW..#.
-........###########.
-0
-3
-KIELCE KRAKOW 0
-KRAKOW GDANSK 0
-KRAKOW GDANSK 1
-
-Wyjście:/Output:
-5
-40
-40 KIELCE SZCZECIN
