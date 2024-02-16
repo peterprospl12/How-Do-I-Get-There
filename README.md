@@ -29,6 +29,44 @@ Implementation notes:
   - Smartpointers from standard library are forbidden, but you can still implement your own smartpointer class.
   - Please remember to free memory when deleting elements of the implemented data structures.
 
+Przykłady:/Examples:<br>
+<br>
+<b>Tak może być</b>:/<b>This can be</b>:
+<pre>*GDANSK....OPOLE....RUMIA
+...*GDYNIA......*....*...
+*SOPOT.............*....*
+...PUCK*.*KRAKOW.REDA.HEL
+</pre>
+<b>Tak nie będzie</b>:/<b>This is incorrect</b>:
+<pre>**GDANSK..........OPOLE.
+..........*GDYNIA*......
+*SOPOTHEL...............
+........*..REDA.*PUCK*..
+</pre>
+<br>
+<b>Z A można dotrzeć do B</b>:/<b>It is possible to arrive from point A to B</b>:
+<pre>..................
+A*####...#####*B..
+.....#.C.#........
+.....##*##........
+</pre>
+<pre>......
+.A**B.
+......
+</pre>
+<br>
+<b>Z A nie można dotrzeć do B</b>:/<b>It is not possible to arrive from point A to B</b>:
+<pre>....##*B
+A*##....
+</pre>
+<pre>....##*B
+A*#*C...
+</pre>
+<pre>....*....
+A*##C##*B
+</pre>
+
+
 =================================================================
 
 Wejście:/Input:
@@ -112,4 +150,41 @@ Tests:
 13 - long path, array implementation may not fit in time
 
 14 - many edges
+
+
+<h3>Przykład:/Example:</h3>
+<pre><b>Wejście:/Input:</b>
+20 20
+.........GDANSK.....
+........*...........
+........#...........
+........#...........
+*##################.
+#SZCZECIN.........#.
+#.................#.
+##................#.
+.############*#####.
+.#...WARSZAWA.......
+.#..................
+.#############......
+.#...........#......
+.#..WROCLAW.##......
+.#..*.......*.......
+.####.......#KIELCE.
+......*##.#########.
+.OPOLE..#.*.......#.
+........#.KRAKOW..#.
+........###########.
+0
+3
+KIELCE KRAKOW 0
+KRAKOW GDANSK 0
+KRAKOW GDANSK 1
+
+<b>Wyjście:/Output:</b>
+5
+40
+40 KIELCE SZCZECIN
+
+</pre>
 
